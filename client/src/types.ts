@@ -34,4 +34,11 @@ export interface Mesa {
     posicao: { x: number; y: number };
     capacidade: number;
     horarios: Horario[];
+}
+
+export interface Pedido {
+    id: number;
+    cliente: string;
+    descricao: string;
+    // Adicione outros campos conforme necessário
 } 

@@ -582,6 +582,7 @@ export default function Cardapio() {
   const categorias = ["Entradas", "Pratos Principais", "Sobremesas", "Bebidas", "Ofertas"];
   const { addItem } = useCart();
   const [addedItemId, setAddedItemId] = useState<number | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const handleAddToCart = (item: MenuItem) => {
     addItem({
@@ -633,12 +634,19 @@ export default function Cardapio() {
               <p className="text-gray-600 font-['Poppins'] max-w-2xl mx-auto">
                 Explore nossa seleção premium de pratos cuidadosamente preparados por nossos chefs renomados.
               </p>
+              <input
+                type="text"
+                placeholder="Pesquisar itens..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="border p-2 rounded-lg mb-4 w-full"
+              />
             </div>
 
             {/* Grade de Produtos Aprimorada */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
               {menuItems
-                .filter((item: MenuItem) => item.categoria === categoriaAtiva)
+                .filter((item: MenuItem) => item.nome.toLowerCase().includes(searchTerm.toLowerCase()))
                 .map((item: MenuItem) => (
                   <div
                     key={item.id}
@@ -673,11 +681,7 @@ export default function Cardapio() {
                         <button
                           onClick={() => handleAddToCart(item)}
                           className={`relative flex items-center justify-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 overflow-hidden
-                            ${
-                              addedItemId === item.id
-                                ? 'bg-green-500 text-white'
-                                : 'bg-[#FFA726] text-white hover:bg-[#FF9800] hover:pr-12'
-                            }`}
+                            ${addedItemId === item.id ? 'bg-green-500 text-white' : 'bg-[#FFA726] text-white hover:bg-[#FF9800] hover:pr-12'}`}
                         >
                           {addedItemId === item.id ? (
                             <>

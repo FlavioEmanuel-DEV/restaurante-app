@@ -1,14 +1,16 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiMenu, FiX, FiSettings, FiUsers, FiPackage, FiClock, FiDollarSign } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiMenu, FiX, FiSettings, FiUsers, FiPackage, FiClock, FiDollarSign, FiEdit, FiTrash, FiPlus, FiSearch, FiFilter, FiToggleLeft, FiToggleRight } from 'react-icons/fi';
 import { useAuth } from '../contexts/AuthContext';
+import CardapioAdmin from './CardapioAdmin'; // Importando o componente CardapioAdmin
+import ReservaAdmin from './ReservaAdmin'; // Importando o componente ReservaAdmin
+import { Link } from 'react-router-dom';
+import PromocaoAdmin from './PromocaoAdmin';
 
 export default function AdminDashboard() {
-
-const [editingItem, setEditingItem] = useState<{
+  const [editingItem, setEditingItem] = useState<{
     type: 'reserva' | 'cardapio' | 'promocao' | 'pedido' | null;
-     data: any;
-    }>({ type: null, data: null });
+    data: any;
+  }>({ type: null, data: null });
 
   const [activeTab, setActiveTab] = useState('reservas');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -39,85 +41,9 @@ const [editingItem, setEditingItem] = useState<{
   const renderContent = () => {
     switch(activeTab) {
       case 'reservas':
-        return (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">Gerenciar Reservas</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="p-3 text-left">Nome</th>
-                    <th className="p-3 text-left">Data</th>
-                    <th className="p-3 text-left">Horário</th>
-                    <th className="p-3 text-left">Mesa</th>
-                    <th className="p-3 text-left">Status</th>
-                    <th className="p-3 text-left">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reservas.map(reserva => (
-                    <tr key={reserva.id} className="border-b">
-                      <td className="p-3">{reserva.nome}</td>
-                      <td className="p-3">{reserva.data}</td>
-                      <td className="p-3">{reserva.horario}</td>
-                      <td className="p-3">{reserva.mesa}</td>
-                      <td className="p-3">
-                        <span className={`px-2 py-1 rounded-full text-sm ${reserva.status === 'Confirmada' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                          {reserva.status}
-                        </span>
-                      </td>
-                      <td className="p-3">
-                      <button onClick={() => setEditingItem({ type: 'reserva', data: reserva })}
-                        className="text-blue-600 hover:text-blue-800 mr-2"
-                        >Editar
-                        </button>
-                        <button className="text-red-600 hover:text-red-800">Excluir</button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-
+        return <ReservaAdmin />;
       case 'cardapio':
-        return (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">Gerenciar Cardápio</h2>
-            <div className="mb-6">
-              <button className="bg-[#FF5733] text-white px-4 py-2 rounded hover:bg-[#E64A2E]">
-                Adicionar Item
-              </button>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {cardapio.map(item => (
-                <div key={item.id} className="border rounded-lg p-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold">{item.nome}</h3>
-                      <p className="text-gray-600">{item.categoria}</p>
-                    </div>
-                    <span className={`px-2 py-1 text-sm rounded-full ${item.disponivel ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                      {item.disponivel ? 'Disponível' : 'Indisponível'}
-                    </span>
-                  </div>
-                  <div className="mt-4 flex justify-between items-center">
-                    <span className="text-xl font-bold">R$ {item.preco.toFixed(2)}</span>
-                    <div>
-                    <button 
-  onClick={() => setEditingItem({ type: 'cardapio', data: item })}
-  className="text-blue-600 hover:text-blue-800 mr-2"
->Editar</button>
-                      <button className="text-red-600 hover:text-red-800">Excluir</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-
+        return <CardapioAdmin />;
       case 'pedidos':
         return (
           <div className="bg-white rounded-lg shadow p-6">
@@ -147,40 +73,8 @@ const [editingItem, setEditingItem] = useState<{
             </div>
           </div>
         );
-
       case 'promocoes':
-        return (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">Gerenciar Promoções</h2>
-            <div className="mb-6">
-              <button className="bg-[#FF5733] text-white px-4 py-2 rounded hover:bg-[#E64A2E]">
-                Nova Promoção
-              </button>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {promocoes.map(promocao => (
-                <div key={promocao.id} className="border rounded-lg p-4 bg-[#FFF3E0]">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold">{promocao.titulo}</h3>
-                      <p className="text-gray-600">Válido até: {promocao.validoAte}</p>
-                    </div>
-                    <span className="text-xl font-bold text-[#FF5733]">-{promocao.desconto}%</span>
-                  </div>
-                  <div className="mt-4 flex justify-between items-center">
-                  <button onClick={() => setEditingItem({ type: 'promocao', data: promocao })}
-                  className="text-blue-600 hover:text-blue-800 mr-2"
-                    >Editar
-                    </button>
-                    <button className="text-red-600 hover:text-red-800">Excluir</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-
-      
+        return <PromocaoAdmin/>
       default:
         return null;
     }
@@ -221,15 +115,6 @@ const [editingItem, setEditingItem] = useState<{
                 Cardápio
               </button>
               <button
-                onClick={() => setActiveTab('promocoes')}
-                className={`w-full flex items-center gap-2 p-3 rounded-lg ${
-                  activeTab === 'promocoes' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
-                }`}
-              >
-                <FiDollarSign />
-                Promoções
-              </button>
-              <button
                 onClick={() => setActiveTab('pedidos')}
                 className={`w-full flex items-center gap-2 p-3 rounded-lg ${
                   activeTab === 'pedidos' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
@@ -238,9 +123,26 @@ const [editingItem, setEditingItem] = useState<{
                 <FiUsers />
                 Pedidos
               </button>
+              <button
+                onClick={() => setActiveTab('promocoes')}
+                className={`w-full flex items-center gap-2 p-3 rounded-lg ${
+                  activeTab === 'promocoes' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
+                }`}
+              >
+                <FiDollarSign />
+                Promoções
+              </button>
             </nav>
-          </div>
-        </aside>
+        </div>
+        {/* Botão de Logoff na parte inferior */}
+    <button 
+        onClick={handleLogout}
+        className="mt-6 w-full flex items-center gap-2 p-3 rounded-lg hover:bg-red-100 text-red-500">
+        <FiX />
+        Logout
+    </button>
+</aside>
+          
 
         {/* Conteúdo Principal */}
         <main className={`flex-1 p-4 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
@@ -254,9 +156,8 @@ const [editingItem, setEditingItem] = useState<{
             <h1 className="text-2xl font-bold capitalize">{activeTab}</h1>
           </div>
 
-          {renderContent()}
-
-          <button onClick={handleLogout}>Logout</button>
+          {renderContent()}         
+           
         </main>
       </div>
     </div>

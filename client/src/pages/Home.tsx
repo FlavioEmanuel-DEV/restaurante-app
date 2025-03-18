@@ -1,20 +1,22 @@
 import { Link } from "react-router-dom";
-import restaurante from "../assets/images/restaurante (2).jpeg";
+import restaurante from "../assets/images/restaurante (2).JPG";
 import combo1 from "../assets/images/download.jpeg";
 import combo2 from "../assets/images/download (1).jpeg";
 import combo3 from "../assets/images/download (2).jpeg";
+import React from 'react';
+import { usePromocao } from '../contexts/PromocaoContext'; // Importando o contexto
+import CarouselBanner from '../components/CarouselBanner';
+
 
 export default function Home() {
+  const { promocoes } = usePromocao(); // Usando o contexto
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Banner Principal */}
       <div className="relative overflow-hidden">
         <div className="h-screen max-h-[800px] w-full relative">
-          <img 
-            src={restaurante} 
-            alt="Prato principal" 
-            className="w-full h-full object-cover transform scale-105 transition-transform duration-500 hover:scale-100"
-          />
+          <CarouselBanner/>
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30">
             <div className="container mx-auto h-full flex flex-col justify-center items-center text-center px-4">
               <h1 className="text-5xl md:text-7xl font-bold text-white font-['Poppins'] mb-8 animate-fade-in-down">
@@ -60,30 +62,31 @@ export default function Home() {
       {/* Seção de Promoções */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-4xl font-['Poppins'] font-bold text-center mb-8 text-gray-800">
-          Ofertas da Semana
+          Promoções Atuais
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {promocoes.map((promocao) => (
+            <Link key={promocao.id} to={`/cardapio/${promocao.itemId}`} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <div className="relative h-48">
-                <img 
-                  src={combo1} 
-                  alt="Promoção" 
-                  className="w-full h-full object-cover"
-                />
+                {promocao.imagem && (
+                  <img 
+                    src={promocao.imagem} 
+                    alt={promocao.nome} 
+                    className="w-full h-full object-cover"
+                  />
+                )}
                 <div className="absolute top-4 right-4 bg-[#FFA726] text-white px-3 py-1 rounded-full text-sm font-bold">
                   -20%
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-['Poppins'] font-semibold mb-2">Menu Especial {item}</h3>
-                <p className="text-gray-600 mb-4">Pratos selecionados + bebida + sobremesa</p>
+                <h3 className="text-xl font-['Poppins'] font-semibold mb-2">{promocao.nome}</h3>
+                <p className="text-gray-600 mb-4">{promocao.descricao}</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-[#FF5733]">R$ 49,90</span>
-                  <span className="text-gray-400 line-through">R$ 62,90</span>
+                  <span className="text-2xl font-bold text-[#FF5733]">De {promocao.dataInicio} até {promocao.dataFim}</span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
