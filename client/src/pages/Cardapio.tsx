@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { MenuItem } from '../types';
 import { useCart } from '../contexts/CartContext';
 import camarao from '../assets/images/download.jpeg';
-import bruschetta from '../assets/images/download (1).jpeg';
-import carpaccio from '../assets/images/download (2).jpeg';
+import bruschetta from '../assets/images/download1.jpeg';
+import carpaccio from '../assets/images/download2.jpeg';
 
 // Dados de exemplo
 const menuItems: MenuItem[] = [

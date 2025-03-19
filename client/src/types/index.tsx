@@ -55,15 +55,16 @@ export type Pedido = {
   status: string;
 };
 
-export type Vaga = {
-  id: number;
-  titulo: string;
-  tipo: string;
-  local: string;
-  descricao: string;
-  requisitos: string[];
-  beneficios: string[];
-};
+   // types.ts
+   export interface Vaga {
+    id: number;
+    titulo: string;
+    tipo: string;
+    local: string;
+    descricao: string;
+    requisitos: string[];
+    beneficios: string[];
+}
 export interface Horario {
   hora: string;
   disponivel: boolean;

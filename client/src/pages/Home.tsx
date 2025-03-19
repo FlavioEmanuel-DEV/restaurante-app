@@ -1,63 +1,71 @@
 import { Link } from "react-router-dom";
-import restaurante from "../assets/images/restaurante (2).JPG";
-import combo1 from "../assets/images/download.jpeg";
-import combo2 from "../assets/images/download (1).jpeg";
-import combo3 from "../assets/images/download (2).jpeg";
-import React from 'react';
+import combo2 from "../assets/images/download1.jpeg";
 import { usePromocao } from '../contexts/PromocaoContext'; // Importando o contexto
 import CarouselBanner from '../components/CarouselBanner';
+import { motion } from "framer-motion";
+
+
+
 
 
 export default function Home() {
   const { promocoes } = usePromocao(); // Usando o contexto
 
+  
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Banner Principal */}
       <div className="relative overflow-hidden">
-        <div className="h-screen max-h-[800px] w-full relative">
-          <CarouselBanner/>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30">
-            <div className="container mx-auto h-full flex flex-col justify-center items-center text-center px-4">
-              <h1 className="text-5xl md:text-7xl font-bold text-white font-['Poppins'] mb-8 animate-fade-in-down">
-                Sabor que<span className="text-[#FFA726]"> Encanta</span>
-                <br className="hidden md:block" />
-                <span className="text-3xl md:text-4xl block mt-4 font-normal">
-                  Promoções Exclusivas Todos os Dias
-                </span>
-              </h1>
-              
-              <div className="flex flex-col md:flex-row gap-4 md:gap-6 animate-fade-in-up">
-                <Link 
-                  to="/reserva" 
-                  className="bg-[#FFA726] hover:bg-[#FF9800] text-gray-900 px-8 py-4 rounded-xl 
-                    hover:rounded-lg transform hover:scale-105 transition-all duration-300 
-                    font-['Poppins'] font-semibold flex items-center justify-center gap-2
-                    shadow-lg hover:shadow-xl"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  Reservar Mesa
-                </Link>
-                
-                <Link 
-                  to="/cardapio" 
-                  className="bg-white/90 hover:bg-white text-gray-900 px-8 py-4 rounded-xl 
-                    hover:rounded-lg transform hover:scale-105 transition-all duration-300 
-                    font-['Poppins'] font-semibold flex items-center justify-center gap-2
-                    shadow-lg hover:shadow-xl"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                  </svg>
-                  Ver Cardápio
-                </Link>
-              </div>
-            </div>
+      <div className="h-screen max-h-[800px] w-full relative">
+        <CarouselBanner />
+        {/* Fundo com gradiente animado */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 animate-[gradientShift_10s_ease-in-out_infinite]">
+          <div className="container mx-auto h-full flex flex-col justify-center items-start text-left px-8">
+            {/* Título com fonte moderna e animação */}
+            <motion.h1
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-6xl md:text-8xl font-bold text-white font-['Inter'] mb-4"
+            >
+              Sabor Incomparável
+            </motion.h1>
+            {/* Subtítulo com descrição */}
+            <motion.p
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl md:text-2xl text-gray-200 mb-8"
+            >
+              Uma experiência gastronômica única para surpreender seu paladar
+            </motion.p>
+            {/* Botões modernos */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex gap-4"
+            >
+              <Link 
+                to="/reserva" 
+                className="px-8 py-4 rounded-md bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Reserve Agora
+              </Link>
+              <Link 
+                to="/cardapio" 
+                className="px-8 py-4 rounded-md border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
+              >
+                Ver Menu
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>
+    </div>
+      
+
 
       {/* Seção de Promoções */}
       <section className="container mx-auto px-4 py-16">

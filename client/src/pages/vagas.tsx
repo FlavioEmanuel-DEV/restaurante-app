@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Vaga } from '../types';
 
-
 const vagas: Vaga[] = [
   {
       id: 6,

@@ -34,7 +34,7 @@ export default function Header() {
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center gap-2 group">
             <span className="text-3xl font-['Poppins'] font-bold bg-gradient-to-r from-[#FFA726] to-[#FF5733] bg-clip-text text-transparent">
-              App-Restaurante
+              App-Restaurante-Demo
             </span>
           </Link>
 

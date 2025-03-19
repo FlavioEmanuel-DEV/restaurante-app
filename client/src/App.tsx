@@ -15,6 +15,7 @@ import ReservaAdmin from './pages/ReservaAdmin';
 import PromocaoAdmin from './pages/PromocaoAdmin';
 import { PromocaoProvider } from './contexts/PromocaoContext';
 import { CardapioProvider } from './contexts/CardapioContext';
+import { JSX } from 'react';
 
 // Componente de Rota Privada
 const PrivateRoute = ({ element }: { element: JSX.Element }) => {

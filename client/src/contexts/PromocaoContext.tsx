@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface Promocao {
+    [x: string]: any;
     id: number;
     nome: string;
     descricao: string;

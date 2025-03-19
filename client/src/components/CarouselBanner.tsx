@@ -1,13 +1,11 @@
-import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-// Importe suas imagens
-import restaurante from '../assets/images/restaurante (2).JPG';
-import combo1 from '../assets/images/restaurante (3).JPG';
-import combo2 from '../assets/images/restaurante (2)_.jpeg';
-
+// Import images
+import restaurante from '../assets/images/restaurante2.jpg';
+import combo1 from '../assets/images/img1.jpeg';
+import combo2 from '../assets/images/img2.jpeg';
 
 const CarouselBanner = () => {
     const settings = {

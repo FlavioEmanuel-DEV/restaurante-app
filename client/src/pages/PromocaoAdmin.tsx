@@ -10,6 +10,7 @@ interface Promocao {
     dataInicio: string;
     dataFim: string;
     imagem?: string;
+    itemId?: number;
 }
 
 const initialPromocoes: Promocao[] = [

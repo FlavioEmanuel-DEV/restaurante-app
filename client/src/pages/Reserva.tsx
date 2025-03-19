@@ -35,7 +35,7 @@ const mesas: Mesa[] = [
       { hora: '20:00', disponivel: true },
     ]
   },
-  // Adicione mais mesas conforme necessário
+  // Outras mesas podem ser adicionadas
 ];
 
 export default function Reserva() {
@@ -46,6 +46,9 @@ export default function Reserva() {
     data: '',
     horario: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [reservationConfirmed, setReservationConfirmed] = useState(false);
+  const [zoom, setZoom] = useState(1);
 
   const handleMesaClick = (mesa: Mesa) => {
     if (mesa.status === 'ocupada') return;
@@ -54,7 +57,21 @@ export default function Reserva() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Dados da reserva:', { ...formData, mesa: mesaSelecionada });
+    // Validação simples
+    if (!formData.nome || !formData.telefone || !formData.data || !formData.horario) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+    setLoading(true);
+    // Simulação de chamada à API (2 segundos)
+    setTimeout(() => {
+      setLoading(false);
+      setReservationConfirmed(true);
+      console.log('Dados da reserva:', { ...formData, mesa: mesaSelecionada });
+      // Reseta os estados
+      setMesaSelecionada(null);
+      setFormData({ nome: '', telefone: '', data: '', horario: '' });
+    }, 2000);
   };
 
   return (
@@ -76,7 +93,10 @@ export default function Reserva() {
               </p>
             </div>
             
-            <div className="relative w-full aspect-[4/3] bg-gray-50 rounded-xl border-2 border-gray-100 overflow-hidden">
+            <div 
+              className="relative w-full aspect-[4/3] bg-gray-50 rounded-xl border-2 border-gray-100 overflow-hidden"
+              style={{ transform: `scale(${zoom})`, transformOrigin: '0 0' }}
+            >
               <img 
                 src="/planta.jpeg"
                 alt="Planta baixa do restaurante"
@@ -92,13 +112,14 @@ export default function Reserva() {
                       left: `${mesa.posicao.x}px`,
                       top: `${mesa.posicao.y}px`,
                     }}
+                    title={`Mesa ${mesa.numero} - Capacidade: ${mesa.capacidade} pessoas`}
                     className={`absolute w-12 h-12 rounded-full flex items-center justify-center transition-all
                       ${mesa.status === 'ocupada' 
                         ? 'bg-red-500 cursor-not-allowed' 
                         : mesa.id === mesaSelecionada?.id 
                         ? 'bg-[#FFA726] ring-4 ring-[#FFA726]/30 scale-110' 
-                        : 'bg-green-500 hover:scale-105'}`
-                    }
+                        : 'bg-green-500 hover:scale-105'
+                      }`}
                     disabled={mesa.status === 'ocupada'}
                   >
                     <span className="text-white font-['Poppins'] font-bold">
@@ -109,7 +130,7 @@ export default function Reserva() {
               </div>
             </div>
 
-            {/* Legenda Moderna */}
+            {/* Legenda */}
             <div className="mt-6 flex flex-wrap gap-4 justify-center">
               <div className="flex items-center gap-2 px-3 py-1 bg-gray-50 rounded-full">
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
@@ -126,7 +147,7 @@ export default function Reserva() {
             </div>
           </div>
 
-          {/* Formulário Moderno */}
+          {/* Formulário de Reserva */}
           <div className="bg-white rounded-2xl shadow-xl p-6 lg:sticky lg:top-24">
             {mesaSelecionada ? (
               <div className="space-y-6">
@@ -144,7 +165,7 @@ export default function Reserva() {
                   </div>
                 </div>
 
-                {/* Horários */}
+                {/* Seletor de Horários */}
                 <div className="space-y-4">
                   <h4 className="text-lg font-['Poppins'] font-semibold text-gray-800">
                     Selecione o Horário
@@ -161,8 +182,8 @@ export default function Reserva() {
                             ? 'bg-gradient-to-r from-[#FFA726] to-[#FF5733] text-white'
                             : horario.disponivel
                             ? 'bg-gray-50 text-gray-800 hover:bg-gray-100'
-                            : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`
-                        }
+                            : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          }`}
                       >
                         {horario.hora}
                       </button>
@@ -217,14 +238,14 @@ export default function Reserva() {
 
                   <button
                     type="submit"
-                    disabled={!formData.horario}
+                    disabled={!formData.horario || loading}
                     className={`w-full py-4 rounded-xl font-['Poppins'] font-semibold transition-all
-                      ${formData.horario
+                      ${formData.horario && !loading
                         ? 'bg-gradient-to-r from-[#FFA726] to-[#FF5733] text-white hover:shadow-lg'
-                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`
-                    }
+                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      }`}
                   >
-                    Confirmar Reserva
+                    {loading ? 'Reservando...' : 'Confirmar Reserva'}
                   </button>
                 </form>
               </div>
@@ -246,6 +267,22 @@ export default function Reserva() {
           </div>
         </div>
       </div>
+
+      {/* Modal de Confirmação */}
+      {reservationConfirmed && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-2xl p-8 shadow-2xl max-w-md mx-auto text-center">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Reserva Confirmada!</h2>
+            <p className="text-gray-600 mb-6">Sua reserva foi realizada com sucesso.</p>
+            <button
+              onClick={() => setReservationConfirmed(false)}
+              className="px-6 py-3 bg-gradient-to-r from-[#FFA726] to-[#FF5733] text-white rounded-xl hover:shadow-lg transition-all"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

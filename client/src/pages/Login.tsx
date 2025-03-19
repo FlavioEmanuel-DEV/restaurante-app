@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import bgLogin from '../assets/images/bgLogin.JPG'; // Verifique o caminho correto
+import bgLogin from '../assets/images/bgLogin.jpg'; // Verifique o caminho correto
 import { FiLock, FiUser, FiArrowRight } from 'react-icons/fi';
 
 const Login = () => {

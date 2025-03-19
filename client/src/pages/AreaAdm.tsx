@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FiMenu, FiX, FiSettings, FiUsers, FiPackage, FiClock, FiDollarSign, FiEdit, FiTrash, FiPlus, FiSearch, FiFilter, FiToggleLeft, FiToggleRight } from 'react-icons/fi';
 import { useAuth } from '../contexts/AuthContext';
-import CardapioAdmin from './CardapioAdmin'; // Importando o componente CardapioAdmin
-import ReservaAdmin from './ReservaAdmin'; // Importando o componente ReservaAdmin
 import { Link } from 'react-router-dom';
+import { FiMenu, FiX, FiSettings, FiUsers, FiPackage, FiClock, FiDollarSign } from 'react-icons/fi';
+import CardapioAdmin from './CardapioAdmin'; // Componente CardapioAdmin
+import ReservaAdmin from './ReservaAdmin'; // Componente ReservaAdmin
+import AdminPedidos from './AdminPedidos'; // Importando o componente AdminPedidos
 import PromocaoAdmin from './PromocaoAdmin';
+
 
 export default function AdminDashboard() {
   const [editingItem, setEditingItem] = useState<{
@@ -17,7 +19,7 @@ export default function AdminDashboard() {
 
   const { logout } = useAuth();
 
-  // Dados de exemplo
+  // Dados de exemplo para outras abas (reservas, cardapio, promocoes)
   const reservas = [
     { id: 1, nome: 'João Silva', data: '2024-03-20', horario: '19:00', mesa: 'A3', status: 'Confirmada' },
     { id: 2, nome: 'Maria Souza', data: '2024-03-21', horario: '20:30', mesa: 'B2', status: 'Pendente' }
@@ -26,11 +28,6 @@ export default function AdminDashboard() {
   const cardapio = [
     { id: 1, nome: 'Risoto de Camarão', preco: 89.90, categoria: 'Pratos Principais', disponivel: true },
     { id: 2, nome: 'Tiramisu', preco: 32.90, categoria: 'Sobremesas', disponivel: false }
-  ];
-
-  const pedidos = [
-    { id: 1, cliente: 'Carlos Andrade', total: 152.80, status: 'Em preparo', data: '2024-03-19 19:45' },
-    { id: 2, cliente: 'Ana Costa', total: 89.90, status: 'Entregue', data: '2024-03-19 18:30' }
   ];
 
   const promocoes = [
@@ -45,36 +42,9 @@ export default function AdminDashboard() {
       case 'cardapio':
         return <CardapioAdmin />;
       case 'pedidos':
-        return (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">Pedidos Recentes</h2>
-            <div className="space-y-4">
-              {pedidos.map(pedido => (
-                <div key={pedido.id} className="border rounded-lg p-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold">Pedido #{pedido.id}</h3>
-                      <p className="text-gray-600">{pedido.cliente}</p>
-                    </div>
-                    <span className={`px-2 py-1 text-sm rounded-full ${
-                      pedido.status === 'Entregue' ? 'bg-green-100 text-green-800' :
-                      pedido.status === 'Em preparo' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-gray-100 text-gray-800'
-                    }`}>
-                      {pedido.status}
-                    </span>
-                  </div>
-                  <div className="mt-4 flex justify-between items-center">
-                    <span className="text-gray-600">{pedido.data}</span>
-                    <span className="text-xl font-bold">R$ {pedido.total.toFixed(2)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
+        return <AdminPedidos />;
       case 'promocoes':
-        return <PromocaoAdmin/>
+        return <PromocaoAdmin />;
       default:
         return null;
     }
@@ -82,7 +52,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     logout();
-    // Redirecionar para a página de login ou outra página
+    // Redirecionar para a página de login ou outra página, se necessário
   };
 
   return (
@@ -133,16 +103,16 @@ export default function AdminDashboard() {
                 Promoções
               </button>
             </nav>
-        </div>
-        {/* Botão de Logoff na parte inferior */}
-    <button 
-        onClick={handleLogout}
-        className="mt-6 w-full flex items-center gap-2 p-3 rounded-lg hover:bg-red-100 text-red-500">
-        <FiX />
-        Logout
-    </button>
-</aside>
-          
+          </div>
+          {/* Botão de Logoff na parte inferior */}
+          <button 
+            onClick={handleLogout}
+            className="mt-6 w-full flex items-center gap-2 p-3 rounded-lg hover:bg-red-100 text-red-500"
+          >
+            <FiX />
+            Logout
+          </button>
+        </aside>
 
         {/* Conteúdo Principal */}
         <main className={`flex-1 p-4 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
@@ -157,7 +127,6 @@ export default function AdminDashboard() {
           </div>
 
           {renderContent()}         
-           
         </main>
       </div>
     </div>

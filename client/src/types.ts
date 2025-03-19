@@ -42,3 +42,14 @@ export interface Pedido {
     descricao: string;
     // Adicione outros campos conforme necessário
 } 
+
+   // types.ts
+   export interface Vaga {
+    id: number;
+    titulo: string;
+    tipo: string;
+    local: string;
+    descricao: string;
+    requisitos: string[];
+    beneficios: string[];
+}

@@ -33,6 +33,7 @@ export default function FaleConosco() {
         <div className="max-w-4xl mx-auto">
           {/* Seção de Informações */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+
             {/* Card de Contatos */}
             <div className="bg-white rounded-2xl shadow-xl p-8 h-fit">
               <h2 className="text-2xl font-['Poppins'] font-bold text-gray-800 mb-6 border-b-2 border-[#FFA726] pb-3">
@@ -79,6 +80,8 @@ export default function FaleConosco() {
                 </div>
               </div>
             </div>
+
+            
 
             {/* Formulário Moderno */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -174,6 +177,7 @@ export default function FaleConosco() {
               </form>
             </div>
           </div>
+
 
           {/* Card Trabalhe Conosco Aprimorado */}
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden group transition-all duration-300 hover:shadow-2xl">
