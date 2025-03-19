@@ -1,23 +1,26 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import { useState } from 'react';
-import { GiMeal } from 'react-icons/gi';
-import { FiMenu, FiX, FiSettings, FiUsers, FiPackage, FiClock, FiDollarSign } from 'react-icons/fi';
-import { FaUtensils } from 'react-icons/fa'; // Ícone de comida
-import { IconType } from 'react-icons/lib/iconBase';
+import { FiMenu, FiX, } from 'react-icons/fi';
+import GiMealWrapper from "../icons/GiMealWrapper";
+
 
 
 export default function Header() {
   const location = useLocation();
   const { totalItems } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const gimeal: IconType = GiMeal;
+  
 
   const isActive = (path: string) => location.pathname === path;
+
+  
 
   interface IconProps {
     className?: string;
   }
+
+  
 
   const navLinks = [
     { path: '/', label: 'Home' },
@@ -27,6 +30,9 @@ export default function Header() {
     { path: '/fale-conosco', label: 'Contato' },
     { path: '/area-adm', label: 'Area Adm' },
   ];
+
+  
+  
 
   return (
     <header className="bg-white shadow-lg fixed w-full top-0 z-50 border-b border-gray-100">
@@ -59,11 +65,11 @@ export default function Header() {
 
           <div className="flex items-center gap-6">
             <Link to="/pedidos" className="relative p-2 group">
-              <GiMeal 
-                size={24}
-                color={totalItems > 0 ? '#FF5733' : '#4B5563'}
-                className="transition-all group-hover:text-[#FF5733]"
-              />
+            <GiMealWrapper 
+            size={24}
+            color={totalItems > 0 ? '#FF5733' : '#4B5563'}
+            className="transition-all group-hover:text-[#FF5733]"
+            />
               {/*<FaUtensils size={24} color="#FF5733" />*/}
               {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 bg-[#FF5733] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce">
