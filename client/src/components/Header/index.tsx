@@ -1,8 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import { useState } from 'react';
-import { FiMenu, FiX, } from 'react-icons/fi';
+import { FiMenuWrapper } from '../icons/IconsWrappers';
 import GiMealWrapper from "../icons/GiMealWrapper";
+import { FiXWrapper } from '../icons/IconsWrappers';
 
 
 
@@ -84,9 +85,9 @@ export default function Header() {
               aria-label="Abrir menu"
             >
               {isMenuOpen ? (
-                <FiX className="w-6 h-6" />
+                <FiXWrapper className="w-6 h-6" />
               ) : (
-                <FiMenu className="w-6 h-6" />
+                <FiMenuWrapper className="w-6 h-6" />
               )}
             </button>
           </div>

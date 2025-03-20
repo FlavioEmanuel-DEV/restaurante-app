@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Link } from 'react-router-dom';
-import { FiMenu, FiX, FiSettings, FiUsers, FiPackage, FiClock, FiDollarSign } from 'react-icons/fi';
 import CardapioAdmin from './CardapioAdmin'; // Componente CardapioAdmin
 import ReservaAdmin from './ReservaAdmin'; // Componente ReservaAdmin
 import AdminPedidos from './AdminPedidos'; // Importando o componente AdminPedidos
 import PromocaoAdmin from './PromocaoAdmin';
+import { FiMenuWrapper, FiXWrapper, FiSettingsWrapper, FiUsersWrapper, FiPackageWrapper, FiClockWrapper, FiDollarSignWrapper } from '../components/icons/IconsWrappers';
 
 
 export default function AdminDashboard() {
@@ -62,7 +61,7 @@ export default function AdminDashboard() {
         <aside className={`bg-white shadow-lg ${isSidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 fixed h-screen z-20`}>
           <div className={`${isSidebarOpen ? 'block' : 'hidden'} p-4`}>
             <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
-              <FiSettings className="text-[#FF5733]" />
+              <FiSettingsWrapper className="text-[#FF5733]" />
               Admin Dashboard
             </h2>
             <nav className="space-y-2">
@@ -72,7 +71,7 @@ export default function AdminDashboard() {
                   activeTab === 'reservas' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
                 }`}
               >
-                <FiClock />
+                <FiClockWrapper />
                 Reservas
               </button>
               <button
@@ -81,7 +80,7 @@ export default function AdminDashboard() {
                   activeTab === 'cardapio' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
                 }`}
               >
-                <FiPackage />
+                <FiPackageWrapper />
                 Cardápio
               </button>
               <button
@@ -90,7 +89,7 @@ export default function AdminDashboard() {
                   activeTab === 'pedidos' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
                 }`}
               >
-                <FiUsers />
+                <FiUsersWrapper />
                 Pedidos
               </button>
               <button
@@ -99,7 +98,7 @@ export default function AdminDashboard() {
                   activeTab === 'promocoes' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
                 }`}
               >
-                <FiDollarSign />
+                <FiDollarSignWrapper />
                 Promoções
               </button>
             </nav>
@@ -109,7 +108,7 @@ export default function AdminDashboard() {
             onClick={handleLogout}
             className="mt-6 w-full flex items-center gap-2 p-3 rounded-lg hover:bg-red-100 text-red-500"
           >
-            <FiX />
+            <FiXWrapper />
             Logout
           </button>
         </aside>
@@ -121,7 +120,7 @@ export default function AdminDashboard() {
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="p-2 hover:bg-gray-100 rounded-lg"
             >
-              {isSidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              {isSidebarOpen ? <FiXWrapper size={24} /> : <FiMenuWrapper size={24} />}
             </button>
             <h1 className="text-2xl font-bold capitalize">{activeTab}</h1>
           </div>

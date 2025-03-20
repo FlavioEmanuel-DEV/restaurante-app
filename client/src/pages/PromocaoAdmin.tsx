@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { usePromocao } from '../contexts/PromocaoContext'; //
-import { FiEdit, FiTrash, FiPlus, FiSearch } from 'react-icons/fi';
+import { FiEditWrapper, FiTrashWrapper, FiPlusWrapper, FiSearchWrapper } from '../components/icons/IconsWrappers';
 
 interface Promocao {
     id: number;
@@ -107,7 +107,7 @@ export default function PromocaoAdmin() {
             {/* Filtro de Busca e Botão para Adicionar Nova Promoção */}
             <div className="flex items-center mb-4">
                 <div className="flex flex-1 items-center">
-                    <FiSearch className="mr-2 text-gray-400" />
+                    <FiSearchWrapper className="mr-2 text-gray-400" />
                     <input
                         type="text"
                         placeholder="Buscar promoção..."
@@ -123,7 +123,7 @@ export default function PromocaoAdmin() {
                     }}
                     className="flex items-center gap-2 bg-[#FF5733] text-white px-4 py-2 rounded-lg hover:bg-[#E64A2E] ml-4"
                 >
-                    <FiPlus /> Adicionar Nova Promoção
+                    <FiPlusWrapper /> Adicionar Nova Promoção
                 </button>
             </div>
 
@@ -258,10 +258,10 @@ export default function PromocaoAdmin() {
                         <p className="text-gray-500">De {promocao.dataInicio} até {promocao.dataFim}</p>
                         <div className="flex justify-end mt-4">
                             <button onClick={() => handleEdit(promocao)} className="text-blue-500 hover:text-blue-700 mr-2">
-                                <FiEdit />
+                                <FiEditWrapper />
                             </button>
                             <button onClick={() => handleDelete(promocao.id)} className="text-red-500 hover:text-red-700">
-                                <FiTrash />
+                                <FiTrashWrapper />
                             </button>
                         </div>
                     </div>

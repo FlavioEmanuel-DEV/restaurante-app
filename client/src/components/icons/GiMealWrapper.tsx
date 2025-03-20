@@ -1,15 +1,11 @@
 // GiMealWrapper.tsx
-import React from "react";
-import { GiMeal as IconMeal } from "react-icons/gi";
+import React from 'react';
+import { GiMeal } from 'react-icons/gi';
+import { IconBaseProps } from 'react-icons';
 
-interface IconProps {
-  size?: number;
-  color?: string;
-  className?: string;
-}
-
-const GiMealWrapper: React.FC<IconProps> = (props) => {
-  return <IconMeal {...props} />;
+const GiMealWrapper: React.FC<IconBaseProps> = (props) => {
+  const IconMealComponent = GiMeal as React.FC<IconBaseProps>;
+  return <IconMealComponent {...props} />;
 };
 
 export default GiMealWrapper;

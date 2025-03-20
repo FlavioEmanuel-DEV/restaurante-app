@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FiEdit, FiTrash, FiPlus, FiSearch } from 'react-icons/fi';
+import { FiEditWrapper, FiTrashWrapper, FiPlusWrapper, FiSearchWrapper } from '../components/icons/IconsWrappers';
+
 
 interface Pedido {
     id: number;
@@ -76,7 +77,7 @@ export default function AdminPedidos() {
             {/* Filtro de Busca e Botão para Adicionar Novo Pedido */}
             <div className="flex items-center mb-4">
                 <div className="flex flex-1 items-center">
-                    <FiSearch className="mr-2 text-gray-400" />
+                    <FiSearchWrapper className="mr-2 text-gray-400" />
                     <input
                         type="text"
                         placeholder="Buscar pedido..."
@@ -92,7 +93,7 @@ export default function AdminPedidos() {
                     }}
                     className="flex items-center gap-2 bg-[#FF5733] text-white px-4 py-2 rounded-lg hover:bg-[#E64A2E] ml-4"
                 >
-                    <FiPlus /> Adicionar Novo Pedido
+                    <FiPlusWrapper /> Adicionar Novo Pedido
                 </button>
             </div>
 
@@ -196,10 +197,10 @@ export default function AdminPedidos() {
                             </span>
                             <div>
                                 <button onClick={() => handleEdit(pedido)} className="text-blue-500 hover:text-blue-700">
-                                    <FiEdit />
+                                    <FiEditWrapper />
                                 </button>
                                 <button onClick={() => handleDelete(pedido.id)} className="text-red-500 hover:text-red-700 ml-2">
-                                    <FiTrash />
+                                    <FiTrashWrapper />
                                 </button>
                             </div>
                         </li>

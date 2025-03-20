@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import bgLogin from '../assets/images/bgLogin.jpg'; // Verifique o caminho correto
-import { FiLock, FiUser, FiArrowRight } from 'react-icons/fi';
+import { FiLockWrapper, FiUserWrapper, FiArrowRightWrapper } from '../components/icons/IconsWrappers';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -55,7 +54,7 @@ const Login = () => {
 
                     {message && (
                         <div className="mb-6 p-3 text-sm text-red-600 bg-red-50 rounded-lg flex items-center gap-2">
-                            <FiLock />
+                            <FiLockWrapper />
                             {message}
                         </div>
                     )}
@@ -67,7 +66,7 @@ const Login = () => {
                                 Usuário
                             </label>
                             <div className="relative">
-                                <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                <FiUserWrapper className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                 <input
                                     type="text"
                                     value={username}
@@ -85,7 +84,7 @@ const Login = () => {
                                 Senha
                             </label>
                             <div className="relative">
-                                <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                <FiLockWrapper className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                                 <input
                                     type="password"
                                     value={password}
@@ -108,7 +107,7 @@ const Login = () => {
                             ) : (
                                 <>
                                     Entrar
-                                    <FiArrowRight />
+                                    <FiArrowRightWrapper />
                                 </>
                             )}
                         </button>

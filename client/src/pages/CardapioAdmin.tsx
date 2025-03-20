@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MenuItem } from '../types';
-import { FiEdit, FiTrash, FiPlus, FiSearch, FiFilter, FiToggleLeft, FiToggleRight } from 'react-icons/fi';
 import camarao from '../assets/images/download.jpeg';
+import { FiEditWrapper, FiTrashWrapper, FiPlusWrapper, FiSearchWrapper, FiToggleLeftWrapper, FiToggleRightWrapper, FiFilterWrapper } from '../components/icons/IconsWrappers';
 
 const initialMenuItems: MenuItem[] = [
     // Exemplo de itens do cardápio
@@ -123,7 +123,7 @@ export default function CardapioAdmin() {
       {/* Filtros e Busca */}
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <div className="relative flex-1">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <FiSearchWrapper className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input
             type="text"
             placeholder="Buscar item..."
@@ -134,7 +134,7 @@ export default function CardapioAdmin() {
         </div>
         
         <div className="relative">
-          <FiFilter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <FiFilterWrapper className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -168,7 +168,7 @@ export default function CardapioAdmin() {
           onClick={() => setShowForm(!showForm)}
           className="flex items-center gap-2 bg-[#FF5733] text-white px-4 py-2 rounded-lg hover:bg-[#E64A2E] transition-colors"
         >
-          <FiPlus />
+          <FiPlusWrapper />
           {showForm ? 'Fechar Formulário' : 'Novo Item'}
         </button>
       </div>
@@ -375,9 +375,9 @@ export default function CardapioAdmin() {
                   >
                     
                     {item.ativa ? (
-                      <FiToggleRight size={20} />
+                      <FiToggleRightWrapper size={20} />
                     ) : (
-                      <FiToggleLeft size={20} />
+                      <FiToggleLeftWrapper size={20} />
                     )}
                   </button>
                   <button
@@ -385,14 +385,14 @@ export default function CardapioAdmin() {
                     title="Editar item"
                     className="text-blue-600 hover:text-blue-800"
                   >
-                    <FiEdit size={20} />
+                    <FiEditWrapper size={20} />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
                     title="Excluir item"
                     className="text-red-600 hover:text-red-800"
                   >
-                    <FiTrash size={20} />
+                    <FiTrashWrapper size={20} />
                   </button>
                 </div>
               </div>
