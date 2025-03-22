@@ -576,7 +576,6 @@ const menuItems: MenuItem[] = [
   }
 ];
 
-
 export default function Cardapio() {
   const [categoriaAtiva, setCategoriaAtiva] = useState("Entradas");
   const categorias = ["Entradas", "Pratos Principais", "Sobremesas", "Bebidas", "Ofertas"];
@@ -600,60 +599,65 @@ export default function Cardapio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Menu Lateral Aprimorado */}
-          <aside className="lg:w-64 xl:w-72 bg-white shadow-xl rounded-2xl p-6 h-fit sticky top-8">
-            <h2 className="text-2xl font-['Poppins'] font-bold text-gray-800 mb-6 border-b-2 border-[#FFA726] pb-3">
-              Categorias
-            </h2>
-            <nav className="space-y-2">
-              {categorias.map((categoria) => (
-                <button
-                  key={categoria}
-                  onClick={() => setCategoriaAtiva(categoria)}
-                  className={`w-full text-left py-4 px-6 rounded-xl transition-all duration-300 font-['Poppins']
-                    ${
-                      categoriaAtiva === categoria
-                        ? 'bg-[#FFA726]/10 text-[#FFA726] font-bold border-2 border-[#FFA726]'
-                        : 'text-gray-600 hover:bg-gray-50 hover:pl-8'
-                    }`}
-                >
-                  {categoria}
-                </button>
-              ))}
-            </nav>
+          <aside className="w-full lg:w-64 xl:w-72">
+            <div className="bg-white shadow-xl rounded-2xl p-6 lg:sticky lg:top-8">
+              <h2 className="text-2xl font-['Poppins'] font-bold text-gray-800 mb-6 border-b-2 border-[#FFA726] pb-3">
+                Categorias
+              </h2>
+              <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0">
+                {categorias.map((categoria) => (
+                  <button
+                    key={categoria}
+                    onClick={() => setCategoriaAtiva(categoria)}
+                    className={`flex-shrink-0 py-3 px-4 lg:px-6 rounded-xl transition-all duration-300 font-['Poppins'] whitespace-nowrap
+                      ${
+                        categoriaAtiva === categoria
+                          ? 'bg-[#FFA726]/10 text-[#FFA726] font-bold border-2 border-[#FFA726]'
+                          : 'text-gray-600 hover:bg-gray-50 hover:pl-8'
+                      }`}
+                  >
+                    {categoria}
+                  </button>
+                ))}
+              </nav>
+            </div>
           </aside>
 
           {/* Conteúdo Principal */}
           <div className="flex-1">
-            <div className="mb-12 text-center">
-              <h1 className="text-4xl font-['Poppins'] font-bold text-gray-800 mb-4">
+            <div className="mb-8 sm:mb-12">
+              <h1 className="text-3xl sm:text-4xl font-['Poppins'] font-bold text-gray-800 mb-4">
                 Cardápio Completo
               </h1>
-              <p className="text-gray-600 font-['Poppins'] max-w-2xl mx-auto">
+              <p className="text-gray-600 font-['Poppins'] max-w-2xl">
                 Explore nossa seleção premium de pratos cuidadosamente preparados por nossos chefs renomados.
               </p>
-              <input
-                type="text"
-                placeholder="Pesquisar itens..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="border p-2 rounded-lg mb-4 w-full"
-              />
+              <div className="mt-4">
+                <input
+                  type="text"
+                  placeholder="Pesquisar itens..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#FFA726] focus:outline-none"
+                />
+              </div>
             </div>
 
             {/* Grade de Produtos Aprimorada */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
               {menuItems
-                .filter((item: MenuItem) => item.nome.toLowerCase().includes(searchTerm.toLowerCase()))
-                .map((item: MenuItem) => (
+                .filter((item) => item.categoria === categoriaAtiva)
+                .filter((item) => item.nome.toLowerCase().includes(searchTerm.toLowerCase()))
+                .map((item) => (
                   <div
                     key={item.id}
                     className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden"
                   >
                     {/* Imagem com Overlay */}
-                    <div className="relative h-60 overflow-hidden">
+                    <div className="relative h-48 sm:h-60 overflow-hidden">
                       <img
                         src={item.imagem}
                         alt={item.nome}
@@ -666,57 +670,38 @@ export default function Cardapio() {
                     </div>
 
                     {/* Detalhes do Produto */}
-                    <div className="p-6">
-                      <h3 className="font-['Poppins'] font-bold text-xl text-gray-800 mb-2">
+                    <div className="p-4 sm:p-6">
+                      <h3 className="font-['Poppins'] font-bold text-lg sm:text-xl text-gray-800 mb-2">
                         {item.nome}
                       </h3>
-                      <p className="font-['Poppins'] text-gray-600 mb-4 line-clamp-3 min-h-[60px]">
+                      <p className="font-['Poppins'] text-gray-600 mb-4 line-clamp-3 min-h-[60px] text-sm sm:text-base">
                         {item.descricao}
                       </p>
                       
                       <div className="flex justify-between items-center">
-                        <span className="font-['Poppins'] font-bold text-2xl text-[#FFA726]">
+                        <span className="font-['Poppins'] font-bold text-xl sm:text-2xl text-[#FFA726]">
                           R$ {item.preco.toFixed(2)}
                         </span>
                         <button
                           onClick={() => handleAddToCart(item)}
-                          className={`relative flex items-center justify-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 overflow-hidden
+                          className={`relative flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl transition-all duration-300 overflow-hidden text-sm sm:text-base
                             ${addedItemId === item.id ? 'bg-green-500 text-white' : 'bg-[#FFA726] text-white hover:bg-[#FF9800] hover:pr-12'}`}
                         >
-                          {addedItemId === item.id ? (
-                            <>
-                              <span className="opacity-0">Adicionado</span>
-                              <svg
-                                className="w-5 h-5 absolute"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
-                            </>
-                          ) : (
-                            <>
-                              <span>Adicionar</span>
-                              <svg
-                                className="w-5 h-5 absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 4v16m8-8H4"
-                                />
-                              </svg>
-                            </>
+                          {addedItemId === item.id ? 'Adicionado!' : 'Adicionar ao Carrinho'}
+                          {addedItemId !== item.id && (
+                            <svg
+                              className="w-5 h-5 absolute right-4 transform translate-x-8 group-hover:translate-x-0 transition-transform duration-300"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 4v16m8-8H4"
+                              />
+                            </svg>
                           )}
                         </button>
                       </div>

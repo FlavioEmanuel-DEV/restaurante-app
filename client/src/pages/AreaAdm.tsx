@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import CardapioAdmin from './CardapioAdmin'; // Componente CardapioAdmin
 import ReservaAdmin from './ReservaAdmin'; // Componente ReservaAdmin
 import AdminPedidos from './AdminPedidos'; // Importando o componente AdminPedidos
 import PromocaoAdmin from './PromocaoAdmin';
-import { FiMenuWrapper, FiXWrapper, FiSettingsWrapper, FiUsersWrapper, FiPackageWrapper, FiClockWrapper, FiDollarSignWrapper } from '../components/icons/IconsWrappers';
-
+import { FiMenuWrapper, FiXWrapper, FiSettingsWrapper, FiUsersWrapper, FiPackageWrapper, FiClockWrapper, FiDollarSignWrapper, FiLogOutWrapper } from '../components/icons/IconsWrappers';
 
 export default function AdminDashboard() {
   const [editingItem, setEditingItem] = useState<{
@@ -15,23 +14,29 @@ export default function AdminDashboard() {
 
   const [activeTab, setActiveTab] = useState('reservas');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const { logout } = useAuth();
 
-  // Dados de exemplo para outras abas (reservas, cardapio, promocoes)
-  const reservas = [
-    { id: 1, nome: 'João Silva', data: '2024-03-20', horario: '19:00', mesa: 'A3', status: 'Confirmada' },
-    { id: 2, nome: 'Maria Souza', data: '2024-03-21', horario: '20:30', mesa: 'B2', status: 'Pendente' }
-  ];
+  // Detectar se é dispositivo móvel
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      }
+    };
 
-  const cardapio = [
-    { id: 1, nome: 'Risoto de Camarão', preco: 89.90, categoria: 'Pratos Principais', disponivel: true },
-    { id: 2, nome: 'Tiramisu', preco: 32.90, categoria: 'Sobremesas', disponivel: false }
-  ];
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
-  const promocoes = [
-    { id: 1, titulo: 'Jantar Romântico', desconto: 20, validoAte: '2024-03-31' },
-    { id: 2, titulo: 'Happy Hour', desconto: 30, validoAte: '2024-04-15' }
+  const menuItems = [
+    { id: 'reservas', label: 'Reservas', icon: FiClockWrapper },
+    { id: 'cardapio', label: 'Cardápio', icon: FiPackageWrapper },
+    { id: 'pedidos', label: 'Pedidos', icon: FiUsersWrapper },
+    { id: 'promocoes', label: 'Promoções', icon: FiDollarSignWrapper }
   ];
 
   const renderContent = () => {
@@ -49,83 +54,121 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
+  };
+
   const handleLogout = () => {
     logout();
-    // Redirecionar para a página de login ou outra página, se necessário
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Overlay para dispositivos móveis */}
+      {isMobile && isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-30"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       <div className="flex">
         {/* Sidebar */}
-        <aside className={`bg-white shadow-lg ${isSidebarOpen ? 'w-64' : 'w-0'} transition-all duration-300 fixed h-screen z-20`}>
-          <div className={`${isSidebarOpen ? 'block' : 'hidden'} p-4`}>
-            <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+        <aside 
+          className={`
+            fixed top-0 left-0 h-screen bg-white shadow-xl z-40
+            transform transition-transform duration-300 ease-in-out
+            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+            ${isMobile ? 'w-[80%] max-w-[300px]' : 'w-64'}
+          `}
+        >
+          <div className="flex flex-col h-full">
+            {/* Cabeçalho do Sidebar */}
+            <div className="p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-['Poppins'] font-bold flex items-center gap-2 text-gray-800">
               <FiSettingsWrapper className="text-[#FF5733]" />
-              Admin Dashboard
+                  Dashboard
             </h2>
-            <nav className="space-y-2">
+                {isMobile && (
               <button
-                onClick={() => setActiveTab('reservas')}
-                className={`w-full flex items-center gap-2 p-3 rounded-lg ${
-                  activeTab === 'reservas' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
-                }`}
-              >
-                <FiClockWrapper />
-                Reservas
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg text-gray-500"
+                  >
+                    <FiXWrapper size={20} />
               </button>
+                )}
+              </div>
+            </div>
+
+            {/* Menu de Navegação */}
+            <nav className="flex-1 overflow-y-auto p-4">
+              <div className="space-y-2">
+                {menuItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
               <button
-                onClick={() => setActiveTab('cardapio')}
-                className={`w-full flex items-center gap-2 p-3 rounded-lg ${
-                  activeTab === 'cardapio' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
-                }`}
-              >
-                <FiPackageWrapper />
-                Cardápio
+                      key={item.id}
+                      onClick={() => handleTabChange(item.id)}
+                      className={`
+                        w-full flex items-center gap-3 p-3 rounded-xl
+                        transition-all duration-200 font-['Poppins']
+                        ${activeTab === item.id 
+                          ? 'bg-[#FF5733] text-white shadow-lg shadow-[#FF5733]/20' 
+                          : 'text-gray-600 hover:bg-gray-50'
+                        }
+                      `}
+                    >
+                      <Icon size={20} />
+                      <span>{item.label}</span>
               </button>
-              <button
-                onClick={() => setActiveTab('pedidos')}
-                className={`w-full flex items-center gap-2 p-3 rounded-lg ${
-                  activeTab === 'pedidos' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
-                }`}
-              >
-                <FiUsersWrapper />
-                Pedidos
-              </button>
-              <button
-                onClick={() => setActiveTab('promocoes')}
-                className={`w-full flex items-center gap-2 p-3 rounded-lg ${
-                  activeTab === 'promocoes' ? 'bg-[#FF5733] text-white' : 'hover:bg-gray-100'
-                }`}
-              >
-                <FiDollarSignWrapper />
-                Promoções
-              </button>
+                  );
+                })}
+              </div>
             </nav>
+
+            {/* Botão de Logout */}
+            <div className="p-4 border-t border-gray-100">
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-3 p-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors font-['Poppins']"
+              >
+                <FiLogOutWrapper size={20} />
+                <span>Sair</span>
+              </button>
+            </div>
           </div>
-          {/* Botão de Logoff na parte inferior */}
-          <button 
-            onClick={handleLogout}
-            className="mt-6 w-full flex items-center gap-2 p-3 rounded-lg hover:bg-red-100 text-red-500"
-          >
-            <FiXWrapper />
-            Logout
-          </button>
         </aside>
 
         {/* Conteúdo Principal */}
-        <main className={`flex-1 p-4 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
-          <div className="flex justify-between items-center mb-6">
+        <main className={`
+          flex-1 min-h-screen transition-all duration-300 
+          ${isSidebarOpen && !isMobile ? 'ml-64' : 'ml-0'}
+        `}>
+          {/* Header */}
+          <header className="bg-white shadow-sm sticky top-0 z-20">
+            <div className="px-4 py-4 flex items-center justify-between">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-2 hover:bg-gray-100 rounded-lg"
+                className="p-2 hover:bg-gray-100 rounded-lg text-gray-600"
+                aria-label={isSidebarOpen ? 'Fechar menu' : 'Abrir menu'}
             >
               {isSidebarOpen ? <FiXWrapper size={24} /> : <FiMenuWrapper size={24} />}
             </button>
-            <h1 className="text-2xl font-bold capitalize">{activeTab}</h1>
-          </div>
+              <h1 className="text-xl md:text-2xl font-['Poppins'] font-bold text-gray-800 capitalize">
+                {menuItems.find(item => item.id === activeTab)?.label || ''}
+              </h1>
+              <div className="w-10" /> {/* Espaçador para centralizar o título */}
+            </div>
+          </header>
 
-          {renderContent()}         
+          {/* Conteúdo da Página */}
+          <div className="p-4 md:p-6 lg:p-8">
+            {renderContent()}
+          </div>
         </main>
       </div>
     </div>

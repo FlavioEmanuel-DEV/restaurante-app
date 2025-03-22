@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FiEdit, FiTrash, FiPlus, FiSearch } from 'react-icons/fi';
 import { FiEditWrapper, FiTrashWrapper, FiPlusWrapper, FiSearchWrapper } from '../components/icons/IconsWrappers';
 
 interface Reserva {
@@ -72,19 +71,19 @@ export default function ReservaAdmin() {
     );
 
     return (
-        <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-8 text-gray-800">Gerenciamento de Reservas</h1>
+        <div className="container mx-auto p-4 sm:p-6">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-800">Gerenciamento de Reservas</h1>
 
             {/* Filtro de Busca e Botão para Adicionar Nova Reserva */}
-            <div className="flex items-center mb-4">
-                <div className="flex flex-1 items-center">
+            <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
+                <div className="flex w-full sm:flex-1 items-center">
                     <FiSearchWrapper className="mr-2 text-gray-400" />
                     <input
                         type="text"
                         placeholder="Buscar reserva..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="border p-2 rounded-lg flex-1"
+                        className="border p-2 rounded-lg w-full"
                     />
                 </div>
                 <button
@@ -92,7 +91,7 @@ export default function ReservaAdmin() {
                         resetForm();
                         setShowForm(true);
                     }}
-                    className="flex items-center gap-2 bg-[#FF5733] text-white px-4 py-2 rounded-lg hover:bg-[#E64A2E] ml-4"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#FF5733] text-white px-4 py-2 rounded-lg hover:bg-[#E64A2E]"
                 >
                     <FiPlusWrapper /> Adicionar Nova Reserva
                 </button>
@@ -100,12 +99,12 @@ export default function ReservaAdmin() {
 
             {/* Formulário */}
             {showForm && (
-                <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
                     <h2 className="text-xl font-bold mb-4">
                         {selectedReserva ? 'Editar Reserva' : 'Adicionar Nova Reserva'}
                     </h2>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium mb-1">Nome</label>
                             <input
@@ -172,23 +171,29 @@ export default function ReservaAdmin() {
             )}
 
             {/* Lista de Reservas */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <h2 className="text-xl font-bold mb-4">Reservas</h2>
-                <ul>
-                    {filteredReservas.map(reserva => (
-                        <li key={reserva.id} className="flex justify-between items-center mb-2 p-4 border-b hover:bg-gray-50 transition">
-                            <span>{reserva.nome} - {reserva.data} {reserva.horario} - Mesa {reserva.mesa}</span>
-                            <div>
-                                <button onClick={() => handleEdit(reserva)} className="text-blue-500 hover:text-blue-700">
-                                    <FiEditWrapper />
-                                </button>
-                                <button onClick={() => handleDelete(reserva.id)} className="text-red-500 hover:text-red-700 ml-2">
-                                    <FiTrashWrapper />
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <div className="overflow-x-auto">
+                    <ul className="min-w-full">
+                        {filteredReservas.map(reserva => (
+                            <li key={reserva.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 p-4 border-b hover:bg-gray-50 transition">
+                                <div className="mb-2 sm:mb-0">
+                                    <span className="block sm:inline">{reserva.nome}</span>
+                                    <span className="block sm:inline sm:ml-2 text-gray-600">{reserva.data} {reserva.horario}</span>
+                                    <span className="block sm:inline sm:ml-2">Mesa {reserva.mesa}</span>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => handleEdit(reserva)} className="text-blue-500 hover:text-blue-700 p-2">
+                                        <FiEditWrapper />
+                                    </button>
+                                    <button onClick={() => handleDelete(reserva.id)} className="text-red-500 hover:text-red-700 p-2">
+                                        <FiTrashWrapper />
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );

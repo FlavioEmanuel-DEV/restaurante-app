@@ -18,7 +18,12 @@ import {
   FiLock,
   FiUser,
   FiArrowRight,
-  FiFilter
+  FiFilter,
+  FiEdit2, 
+  FiTrash2,
+  FiLogOut,
+  FiCalendar, 
+  FiImage
 } from 'react-icons/fi';
 
 export const FiXWrapper: React.FC<IconBaseProps> = (props) => {
@@ -87,5 +92,25 @@ export const FiArrowRightWrapper: React.FC<IconBaseProps> = (props) => {
 };
 export const FiFilterWrapper: React.FC<IconBaseProps> = (props) => {
   const Component = FiFilter as React.FC<IconBaseProps>;
+  return <Component {...props} />;
+};
+export const FiEdit2Wrapper: React.FC<IconBaseProps> = (props) => {
+  const Component = FiEdit2 as React.FC<IconBaseProps>;
+  return <Component {...props} />;
+};
+export const FiTrash2Wrapper: React.FC<IconBaseProps> = (props) => {
+  const Component = FiTrash2 as React.FC<IconBaseProps>;
+  return <Component {...props} />;
+};
+export const FiLogOutWrapper: React.FC<IconBaseProps> = (props) => {
+  const Component = FiLogOut as React.FC<IconBaseProps>;
+  return <Component {...props} />;
+};
+export const FiCalendarWrapper: React.FC<IconBaseProps> = (props) => {
+  const Component = FiCalendar as React.FC<IconBaseProps>;
+  return <Component {...props} />;
+};
+export const FiImageWrapper: React.FC<IconBaseProps> = (props) => {
+  const Component = FiImage as React.FC<IconBaseProps>;
   return <Component {...props} />;
 };

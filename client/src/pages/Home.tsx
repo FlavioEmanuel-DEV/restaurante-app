@@ -6,73 +6,71 @@ import { motion } from "framer-motion";
 
 
 
-
-
 export default function Home() {
   const { promocoes } = usePromocao(); // Usando o contexto
 
   
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="min-h-screen flex flex-col">
       {/* Banner Principal */}
-      <div className="relative overflow-hidden">
-      <div className="h-screen max-h-[800px] w-full relative">
-        <CarouselBanner />
-        {/* Fundo com gradiente animado */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 animate-[gradientShift_10s_ease-in-out_infinite]">
-          <div className="container mx-auto h-full flex flex-col justify-center items-start text-left px-8">
-            {/* Título com fonte moderna e animação */}
-            <motion.h1
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-6xl md:text-8xl font-bold text-white font-['Inter'] mb-4"
-            >
-              Sabor Incomparável
-            </motion.h1>
-            {/* Subtítulo com descrição */}
-            <motion.p
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl md:text-2xl text-gray-200 mb-8"
-            >
-              Uma experiência gastronômica única para surpreender seu paladar
-            </motion.p>
-            {/* Botões modernos */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex gap-4"
-            >
-              <Link 
-                to="/reserva" 
-                className="px-8 py-4 rounded-md bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+      <div className="relative">
+        <div className="w-full">
+          <CarouselBanner />
+          {/* Fundo com gradiente animado */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 animate-[gradientShift_10s_ease-in-out_infinite]">
+            <div className="container mx-auto h-full flex flex-col justify-center items-start text-left px-4 sm:px-8">
+              {/* Título com fonte moderna e animação */}
+              <motion.h1
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white font-['Inter'] mb-2 sm:mb-4 px-2 sm:px-4 leading-tight"
               >
-                Reserve Agora
-              </Link>
-              <Link 
-                to="/cardapio" 
-                className="px-8 py-4 rounded-md border border-white text-white hover:bg-white hover:text-black transition-all duration-300"
+                Sabor Incomparável
+              </motion.h1>
+              {/* Subtítulo com descrição */}
+              <motion.p
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-200 mb-4 sm:mb-8 px-2 sm:px-4 max-w-xl sm:max-w-2xl"
               >
-                Ver Menu
-              </Link>
-            </motion.div>
+                Uma experiência gastronômica única para surpreender seu paladar
+              </motion.p>
+              {/* Botões modernos */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="flex flex-col xs:flex-row gap-2 sm:gap-3 px-2 sm:px-4 w-full xs:w-auto"
+              >
+                <Link 
+                  to="/reserva" 
+                  className="px-2 sm:px-3 py-3 sm:py-4 rounded-md bg-gradient-to-r from-orange-400 to-orange-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base font-medium text-center whitespace-nowrap"
+                >
+                  Reserve Agora
+                </Link>
+                <Link 
+                  to="/cardapio" 
+                  className="px-2 sm:px-3 py-3 sm:py-4 rounded-md border border-white text-white hover:bg-white hover:text-black transition-all duration-300 text-sm sm:text-base font-medium text-center whitespace-nowrap"
+                >
+                  Ver Menu
+                </Link>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
       
 
 
       {/* Seção de Promoções */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-4xl font-['Poppins'] font-bold text-center mb-8 text-gray-800">
+      <section className="container mx-auto px-4 py-8 sm:py-16 bg-white">
+        <h2 className="text-3xl sm:text-4xl font-['Poppins'] font-bold text-center mb-8 text-gray-800">
           Promoções Atuais
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
           {promocoes.map((promocao) => (
             <Link key={promocao.id} to={`/cardapio/${promocao.itemId}`} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <div className="relative h-48">
@@ -100,20 +98,20 @@ export default function Home() {
       </section>
 
       {/* Seção Destaque do Chef */}
-      <div className="bg-[#FFA726]/10 py-16">
+      <div className="bg-[#FFA726]/10 py-8 sm:py-16">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-          <div className="md:w-1/2">
+          <div className="w-full md:w-1/2">
             <img 
               src={combo2} 
               alt="Prato do Chef" 
-              className="rounded-2xl shadow-xl"
+              className="rounded-2xl shadow-xl w-full"
             />
           </div>
-          <div className="md:w-1/2">
-            <h2 className="text-4xl font-['Poppins'] font-bold mb-4 text-gray-800">
+          <div className="w-full md:w-1/2 text-center md:text-left">
+            <h2 className="text-3xl sm:text-4xl font-['Poppins'] font-bold mb-4 text-gray-800">
               Especialidade do Chef
             </h2>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-base sm:text-lg text-gray-600 mb-6">
               Nosso premiado Risoto de Camarão com Trufa Branca, preparado com ingredientes
               frescos e selecionados diretamente dos melhores fornecedores.
             </p>
@@ -164,12 +162,12 @@ export default function Home() {
       </section>
 
       {/* Footer Aprimorado */}
-      <footer className="bg-gray-900 mt-24 border-t-8 border-[#FFA726]/20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+      <footer className="bg-gray-900 mt-12 sm:mt-24 border-t-8 border-[#FFA726]/20">
+        <div className="container mx-auto px-4 py-8 sm:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-white">
             
             {/* Contato */}
-            <div className="space-y-4">
+            <div className="space-y-4 text-center sm:text-left">
               <h3 className="text-xl font-['Poppins'] font-bold text-[#FFA726] mb-4">Contato</h3>
               <p className="flex items-center gap-2">
                 <svg className="w-5 h-5 text-[#FFA726]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
